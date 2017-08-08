@@ -53,6 +53,7 @@ touch "$auditfilelocation"
 currentUser=$( ls -l /dev/console | cut -d " " -f4 )
 hardwareUUID=$( /usr/sbin/system_profiler SPHardwareDataType | grep "Hardware UUID" | awk -F ": " '{print $2}' | xargs )
 
+## Install Updates, Patches and Additional Security Software
 # 1.1 Verify all Apple provided software is current
 # Verify organizational score
 Audit1_1="$(defaults read "$plistlocation" OrgScore1_1)"
@@ -137,7 +138,8 @@ if [ "$Audit1_5" = "1" ]; then
 	fi
 fi
 
-
+### 2 System Preferences
+#2.1 Bluetooth 
 # 2.1.1 Turn off Bluetooth, if no paired devices exist
 # Verify organizational score
 Audit2_1_1="$(defaults read "$plistlocation" OrgScore2_1_1)"
@@ -168,7 +170,7 @@ if [ "$Audit2_1_3" = "1" ]; then
 		echo "2.1.3 passed"
 	fi
 fi
-
+## Date & Time
 # 2.2.2 Ensure time set is within appropriate limits
 # Not audited - only enforced if identified as priority
 # Verify organizational score
@@ -190,7 +192,7 @@ if [ "$Audit2_2_3" = "1" ]; then
 		echo "2.2.3 passed"
 	fi
 fi
-
+## 2.3 Desktop & Screen Saver
 # 2.3.1 Set an inactivity interval of 20 minutes or less for the screen saver 
 # Verify organizational score
 Audit2_3_1="$(defaults read "$plistlocation" OrgScore2_3_1)"
@@ -236,7 +238,7 @@ if [ "$Audit2_3_4" = "1" ]; then
 		echo "* 2.3.4 Set a screen corner to Start Screen Saver" >> "$auditfilelocation"
 	fi
 fi
-
+## 2.4 Sharing
 # 2.4.1 Disable Remote Apple Events 
 # Verify organizational score
 Audit2_4_1="$(defaults read "$plistlocation" OrgScore2_4_1)"
@@ -360,7 +362,7 @@ if [ "$Audit2_4_9" = "1" ]; then
 		echo "* 2.4.9 Disable Remote Management" >> "$auditfilelocation"
 	fi
 fi
-
+## 2.5 Energy Saver
 # 2.5.1 Disable "Wake for network access"
 # Verify organizational score
 Audit2_5_1="$(defaults read "$plistlocation" OrgScore2_5_1)"
@@ -386,7 +388,7 @@ if [ "$Audit2_5_2" = "1" ]; then
 		echo "* 2.5.2 Disable sleeping the computer when connected to power" >> "$auditfilelocation"
 	fi
 fi
-
+## 2.6 Security & Privacy
 # 2.6.1 Enable FileVault 
 # Verify organizational score
 Audit2_6_1="$(defaults read "$plistlocation" OrgScore2_6_1)"
@@ -451,7 +453,7 @@ if [ "$Audit2_6_5" = "1" ]; then
 		echo "* 2.6.5 Review Application Firewall Rules" >> "$auditfilelocation"
 	fi
 fi
-
+## 2.7 iCloud
 # 2.7.4 iCloud Drive Document sync
 # Verify organizational score
 Audit2_7_4="$(defaults read "$plistlocation" OrgScore2_7_4)"
@@ -485,7 +487,7 @@ if [ "$Audit2_7_5" = "1" ]; then
 	echo "2.7.5 passed"
 	fi
 fi
-
+## 2.8 Time Machine
 # 2.8.1 Time Machine Auto-Backup
 # Verify organizational score
 Audit2_8_1="$(defaults read "$plistlocation" OrgScore2_8_1)"
@@ -544,7 +546,7 @@ if [ "$Audit2_11" = "1" ]; then
 		echo "2.11 passed"
 	fi
 fi
-
+## 3 Logging and Auditing
 # 3.1.1 Retain system.log for 90 or more days 
 # Verify organizational score
 Audit3_1_1="$(defaults read "$plistlocation" OrgScore3_1_1)"
@@ -622,7 +624,7 @@ if [ "$Audit3_5" = "1" ]; then
 		echo "3.5 passed"
 	fi
 fi
-
+## 4 Network Configurations
 # 4.1 Disable Bonjour advertising service 
 # Verify organizational score
 Audit4_1="$(defaults read "$plistlocation" OrgScore4_1)"
@@ -685,7 +687,7 @@ if [ "$Audit4_6" = "1" ]; then
 		echo "4.6 passed"
 	fi
 fi
-
+## 5 System Access, Authentication and Authorization
 # 5.1.1 Secure Home Folders
 # Verify organizational score
 Audit5_1_1="$(defaults read "$plistlocation" OrgScore5_1_1)"
@@ -894,7 +896,7 @@ if [ "$Audit5_18" = "1" ]; then
 		echo "* 5.18 System Integrity Protection status" >> "$auditfilelocation"
 	fi
 fi
-
+## 6. User Accounts and Environment
 # 6.1.1 Display login window as name and password
 # Verify organizational score
 Audit6_1_1="$(defaults read "$plistlocation" OrgScore6_1_1)"
